@@ -19,28 +19,28 @@ def main():
 		getUserCoordinate()
 		getAICoordinate()
 def getUserCoordinate():
-		user_coordinate = input("What part of the board would you like to mark? press Q to quit. ")
-		if(user_coordinate.capitalize() == 'Q'):
+	#TODO add a way to make the user attempt to enter a valid entry again if they fail to do so the first time
+		#get the users next move or exit. And if they select a coordinate make sure its valid and empty before trying to continue 
+		user_coordinate = input("What part of the board would you like to mark? press Q to quit. ").upper()
+		if(user_coordinate == 'Q'):
 			exit()
-		if(user_coordinate in coordinate_values):
-			coordinate_values[user_coordinate] = "x" 
+		if(user_coordinate in coordinate_values and coordinate_values[user_coordinate] == '-'):
+			coordinate_values[user_coordinate] = 'x' 
 def getAICoordinate():
-	player_mark_count = 0
-#Check if the center is open to be claimed and take it if its not
+	#Check if the center is open to be claimed and take it if its not
 	if(coordinate_values["B2"] == "-"):
 		coordinate_values["B2"] = "o"
-#Check for potential player winning positions going from row to column to diagnols
-	'''
-	for coordinate in coordinate_values:
-		for i in range(0,3)
-			if(coordinate_values[coordinate] == "x"
-				player_mark_count ++
-			if(player_mark_counter
-		player_mark_count = 0
-	'''
-	for i in range(0,9,3): #TODO FIX THIS FOR LOOP SO IT GETS THE FIRST 3 VALUES IN THE DICTIONARY THEN THE NEXT AND SO ON
-		for x in list(coordinate_values[i:i+3]):
-			print(x)
+	#TODO figure out why placing another value after a successful block causes the program to crash. Index out of range error
+	#Checks to see if the player is about to have a game winning position by row and column then attempts to block it if it finds one,
+	for i in range(0,9,3):
+		current_row = list(coordinate_values.values())[i:i+3]
+		#current_column = list(coordinate_values.values())[i,i + 3, i + 6]
+		print(current_column)
+		#Count the number of times a player mark occurs and make sure the last space is empty
+		if(current_row.count('x') == 2 and 'o' not in current_row): 
+			#Get the exact location in the row or column that is currently empty and replace it with an AI mark
+			value = {l for l in list(coordinate_values)[i:i+3] if coordinate_values[l] == '-'}
+			coordinate_values[list(value)[0]] = "o" 
 #display the current board for the user
 def printGrid():
 	print("""                        
